@@ -14,9 +14,9 @@ contract CounterTest is Test {
         token = new MockToken();
     }
     
-    function testStakingTokens() public {
-        token.approve(address(stakeContract), AMOUNT);
-        bool success = stakeContract.stake(AMOUNT, address(token));
+    function testStakingTokens(uint16 amount) public {
+        token.approve(address(stakeContract), amount);
+        bool success = stakeContract.stake(amount, address(token));
         assertTrue(success);
     }
 }
