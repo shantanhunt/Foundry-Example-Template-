@@ -3,22 +3,20 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "../src/Contract.sol";
+import "../src/MockToken.sol";
 
 contract CounterTest is Test {
-    Counter public counter;
-
+    StakeContract public stakeContract;
+    MockToken public token;
+    uint256 public constant AMOUNT = 1e18;
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        stakeContract = new StakeContract();
+        token = new MockToken();
     }
-
-    function testIncrement() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
-    }
-
-    function testSetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    
+    function testStakingTokens() public {
+        token.approve(address(stakeContract), AMOUNT);
+        bool success = stakeContract.stake(AMOUNT, address(token));
+        assertTrue(success);
     }
 }
